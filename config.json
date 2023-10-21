@@ -1,0 +1,5 @@
+{
+  "pplx_api_key": "YOUR-KEY",
+  "serpi_key": "YOUR-KEY",
+  "model_name": "mistral-7b-instruct"
+}
