@@ -28,15 +28,26 @@ pip install -r requirements.txt
 
 Here's a simple example using `pplx.py` in a Langchain application:
 
-```python
+from langchain.agents import initialize_agent, AgentType, load_tools
+from langchain.callbacks import get_openai_callback
 from pplx import PerplexityChat
 
-# Initialize
-pplx_chat = PerplexityChat()
+# Instance of the PerplexityChatAI class
+chat_perplexity_ai = PerplexityChat(model_name="mistral-7b-instruct", temperature=0.7, verbose=True)
 
-# Use in your Langchain logic
-result = pplx_chat.calculate(text_input)
-```
+# Load the tools
+tools = load_tools(["serpapi"], llm=chat_perplexity_ai)
+
+# Initialize the agent
+agent = initialize_agent(tools, chat_perplexity_ai, 
+                         agent=AgentType.ZERO_SHOT_REACT_DESCRIPTION, 
+                         verbose=True,
+                         handle_parsing_errors=True
+                         )
+
+# Run the agent
+chat_answer = agent.run('Qual a cor do cavalo branco de Napoleão?')
+print('Answer: ', chat_answer)
 
 For more details, refer to the comments and documentation within the `pplx.py` module itself.
 
